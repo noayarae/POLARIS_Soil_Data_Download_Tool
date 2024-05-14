@@ -29,12 +29,7 @@ def calculate():
         selected_options_1 = [option for var, option in zip(option_vars_1, options_1) if var.get() == "1"]
         selected_options_2 = [option for var, option in zip(option_vars_2, options_2) if var.get() == "1"]
         selected_options_3 = [option for var, option in zip(option_vars_3, options_3) if var.get() == "1"]
-        result_label.config(text="Result: " + str(result) + 
-                            "\nSelected Soil Parameters: " + ", ".join(selected_options_1) +
-                            "\nSelected Statistical values: " + ", ".join(selected_options_2) +
-                            "\nSelected Layers: " + ", ".join(selected_options_3) +
-                            #"\nProject Name: " + entry_project_name.get() +
-                            "\nFolder Path: " + entry_folder_path.get(),  fg="blue")
+        
         
         print(selected_options_1, selected_options_2, selected_options_3)
         print(value1, value2, value3, value4)
@@ -50,6 +45,14 @@ def calculate():
 
         lat_list = list(range(bottom_t, top_t, 1))
         lon_list = list(range(right_t, left_t, 1))
+        
+        n_images = len(selected_options_1)*len(selected_options_2)*len(selected_options_3)*len(lat_list)*len(lon_list)
+        result_label.config(text="Result: "# + str(n_imgs) + 
+                            "\nNumber of images: " + str(n_images) +
+                            "\nSelected Soil Parameters: " + ", ".join(selected_options_1) +
+                            "\nSelected Statistical values: " + ", ".join(selected_options_2) +
+                            "\nSelected Layers: " + ", ".join(selected_options_3) +
+                            "\nFolder Path: " + entry_folder_path.get(),  fg="blue")
 
         #print(lat_list)
         #print(lon_list)
@@ -143,7 +146,7 @@ def open_link2(event):
     webbrowser.open_new("https://www.sciencedirect.com/science/article/pii/S0016706116301434")
     
 ref2 = tk.Label(window, text="https://www.sciencedirect.com/science/article/pii/S0016706116301434", justify=tk.LEFT, fg="blue", cursor="hand2")
-ref2.grid(row=2, column=0, columnspan=2, sticky=tk.W)
+ref2.grid(row=2, column=0, columnspan=3, sticky=tk.W)
 ref2.bind("<Button-1>", open_link2)   # Bind the label to open the link when clicked
 
 
@@ -234,13 +237,13 @@ for i, option in enumerate(options_3):
     check_button.grid(row=i+1, column=0, sticky=tk.W)
 
 # Create a label for the second column
-label_3 = tk.Label(frame_3, text="Layer:")
+label_3 = tk.Label(frame_3, text="Layers:")
 label_3.grid(row=0, column=0, columnspan=2, sticky=tk.W)
 #############################################################################
 
 # Create label to describe the purpose of the window
 description_1 = tk.Label(window, text="Input coordinates for desired download area: left, right, top, bottom.\nClick the link to select coordinates using a map:", justify=tk.LEFT, fg="blue")
-description_1.grid(row=6, column=0, columnspan=2)
+description_1.grid(row=6, column=0, columnspan=3)
 # Bind the label to open the link when clicked
 #description_1.bind("<Button-1>", open_link)
 
@@ -277,7 +280,7 @@ entry4.grid(row=10, column=1, padx=10, pady=5, sticky=tk.W)
 
 
 # Create button to perform calculation
-calculate_button = tk.Button(window, text="Calculate", command=calculate)
+calculate_button = tk.Button(window, text="Download", command=calculate)
 calculate_button.grid(row=11, column=0, columnspan=2, padx=10, pady=5, sticky=tk.W)
 
 # Create label to display result
